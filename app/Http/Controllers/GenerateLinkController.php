@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class GenerateLinkController extends Controller
 {
@@ -16,8 +17,9 @@ class GenerateLinkController extends Controller
                 'url' => 'required|string|url|min:1|max:500',
             ]
         );
-
-        dd($request->all());
+        $qrCodes = [];
+        $qrCodes['simple'] = QrCode::size(150)->generate($request->input('url'));
+        dd($qrCodes);
 
     }
 }
