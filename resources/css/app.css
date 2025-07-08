@@ -1,3 +1,97 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'IranSans';
+    src: url('./../../public/assets/fonts/iransans/eot/IRANSansWeb.eot');
+    src: url('./../../public/assets/fonts/iransans/eot/IRANSansWeb.eot?#iefix') format('embedded-opentype'),
+    url('./../../public/assets/fonts/iransans/woff2/IRANSansWeb.woff2') format('woff2'),
+    url('./../../public/assets/fonts/iransans/woff/IRANSansWeb.woff') format('woff'),
+    url('./../../public/assets/fonts/iransans/ttf/IRANSansWeb.ttf') format('truetype');
+}
+
+* {
+    font-family: 'IranSans', serif !important;
+}
+
+
+.whitespace-pre {
+    white-space: pre-wrap;  /* CSS3 */
+    word-wrap: break-word;  /* For IE */
+}
+
+.rtl, input.rtl {
+    direction: rtl !important;
+}
+
+.ltr, input.ltr{
+    direction: ltr !important;
+}
+
+
+
+
+.badge{
+    @apply flex items-center text-nowrap text-xs font-medium me-2 px-2.5 py-0.5 rounded-xl text-center;
+}
+
+.badge-primary{
+    @apply bg-primary text-white;
+}
+
+.badge-success{
+    @apply bg-success text-white;
+}
+.badge-info{
+    @apply bg-info text-white;
+}
+
+.badge-warning{
+    @apply bg-warning text-black;
+}
+
+.badge-danger{
+    @apply bg-danger text-white;
+}
+
+.badge-soft-success{
+    @apply  bg-green-100 text-green-700;
+}
+
+.badge-soft-warning{
+    @apply  bg-orange-100 text-orange-700;
+}
+
+.badge-soft-danger{
+    @apply  bg-red-100 text-red-700;
+}
+
+.badge-soft-gray{
+    @apply bg-gray-200 text-gray-700;
+}
+
+.badge-soft-primary{
+    @apply  bg-purple-200 text-purple-700;
+}
+
+.badge-soft-info{
+    @apply  bg-blue-100/70  text-blue-500 ;
+}
+
+@keyframes pulse2 {
+    0% {
+        box-shadow: 0 0 0 0 rgb(241 85 108 / 50%);
+    }
+
+    100% {
+        box-shadow: 0 0 0 10px rgb(241 85 108 / 0%);
+    }
+}
+
+.pulse2 {
+    animation-duration: 1s;
+    animation-name: pulse2;
+    animation-iteration-count: infinite;
+}
+
