@@ -2,6 +2,7 @@ import {FormEventHandler, useState} from 'react';
 import {useForm} from "@inertiajs/react";
 import LoadingSpinner from "@/Components/LoadingSpinner";
 import InputError from "@/Components/InputError";
+import axios from "axios";
 
 export default function Welcome() {
     const [input, setInput] = useState('');
@@ -12,10 +13,16 @@ export default function Welcome() {
         url: '',
     });
 
+
+    // const submit = async () => {
+    //     let response:any = await axios.post('/generate-link',data);
+    //     let data3:any = await response.json();
+    //     console.log(data3);
+    // }
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         post('/generate-link', {
-            onSuccess: (data:any) => {
+            onSuccess: (data: any) => {
                 console.log(data);
                 reset();
             },

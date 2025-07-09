@@ -16,9 +16,7 @@ class Link extends Model
         $columns = [
             'uuid',
             'code',
-            'original_url',
-            'short_url',
-            'qr_code',
+            'url',
             'clicks',
         ];
         if (!empty($array[0])) {
