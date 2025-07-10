@@ -8,6 +8,7 @@ import CopyToClipboard from "@/Utils/CopyToClipboard";
 
 export default function Welcome({csrf_token}:any) {
     const [input, setInput] = useState('');
+    const [error, setError] = useState([]);
     const [shortUrl,setShortUrl] = useState('');
     const [qrCode,setQrCode] = useState('');
 
@@ -28,9 +29,15 @@ export default function Welcome({csrf_token}:any) {
             },
             body: JSON.stringify(data),
         });
-        let data3:any = await response.json();
-        setShortUrl(data3?.short_url);
-        setQrCode(data3?.qr_codes?.simple);
+        let dataRes:any = await response.json();
+        if(dataRes?.errors){
+            setError(dataRes?.errors.url);
+        }else{
+            setError([]);
+        }
+        setShortUrl(dataRes?.short_url);
+        setQrCode(dataRes?.qr_codes?.simple);
+
     }
 
     return (
@@ -57,7 +64,9 @@ export default function Welcome({csrf_token}:any) {
                             dir="rtl"
                         />
                        <div className="flex justify-center">
-                           <InputError message={errors.url} className="mt-2"/>
+                           {
+                               error && error.map((ii) => <span className="text-center text-red-500 my-1">{ii}</span>)
+                           }
                        </div>
                     </div>
                     <button
@@ -73,10 +82,13 @@ export default function Welcome({csrf_token}:any) {
                         <div className="bg-gray-50 rounded px-3 py-2 text-blue-600 font-mono text-left break-all select-all cursor-pointer w-full border border-gray-200" dir="ltr">
                             <div className="flex justify-between items-center">
                                 <a href={shortUrl} target="_blank">{shortUrl}</a>
-                                <button onClick={()=> CopyToClipboard(shortUrl)} className="text-gray-500 hover:text-blue-600"><FaRegCopy /></button>
+                                <button onClick={(e:any)=> shortUrl ? CopyToClipboard(shortUrl) : null} className="text-gray-500 hover:text-blue-600"><FaRegCopy /></button>
                             </div>
                         </div>
-                        <span className="text-gray-700 font-semibold mt-2 w-full text-center">QR Code:</span>
+                        <span className="text-gray-700 font-semibold mt-2 w-full text-center mb-0">QR Code:</span>
+                        <p className="text-gray-700 text-xs font-semibold mt-0 w-full text-center">
+                            برای دانلود روی عکس کلیک کنید.
+                        </p>
                         <div className="p-2 rounded flex items-center justify-center">
                             <div className="w-full md:w-2/3 p-2 bg-white flex items-center justify-center text-gray-400 text-xs border border-gray-200">
                                 <a download="short_link.svg" href={qrCode} target="_blank">
