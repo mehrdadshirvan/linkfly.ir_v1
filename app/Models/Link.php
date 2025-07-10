@@ -28,6 +28,7 @@ class Link extends Model
     protected $appends = ['short_url'];
 
     public function getShortUrlAttribute(){
+        return url(!empty($this->code) ? $this->code : $this->id);
         return 'https://lfly.ir/'.(!empty($this->code) ? $this->code : $this->id);
     }
 }

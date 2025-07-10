@@ -31,7 +31,7 @@ export default {
                 DEFAULT: "#f1556c",
             },
             'first' : {
-                DEFAULT: "#09344D",
+                DEFAULT: "#09b9ba",
             },
             'second' : {
                 DEFAULT: "#ec7625",
