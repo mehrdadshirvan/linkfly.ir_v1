@@ -7,11 +7,14 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 
+require __DIR__.'/auth.php';
 
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('welcome');
 Route::get('/{code}', [\App\Http\Controllers\HomeController::class, 'show']);
 
-Route::post('/generate-link', [GenerateLinkController::class, 'store']);
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    Route::post('/generate-link', [GenerateLinkController::class, 'store']);
+});
 
 
 
@@ -26,4 +29,3 @@ Route::post('/generate-link', [GenerateLinkController::class, 'store']);
 //    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 //});
 //
-//require __DIR__.'/auth.php';

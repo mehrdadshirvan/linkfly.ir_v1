@@ -1,5 +1,5 @@
 import {FormEventHandler, useState} from 'react';
-import {Link, useForm} from "@inertiajs/react";
+import {Head, Link, useForm} from "@inertiajs/react";
 import LoadingSpinner from "@/Components/LoadingSpinner";
 import InputError from "@/Components/InputError";
 import axios from "axios";
@@ -42,6 +42,7 @@ export default function Welcome({csrf_token}:any) {
 
     return (
         <>
+            <Head title={'کوتاه کننده لینک'}/>
             <div className="min-h-screen flex items-center justify-center bg-[url(/assets/images/bg2.jpg)] bg-center bg-cover font-sans" dir="rtl">
                 <div className="bg-white/90 backdrop-blur-sm  border border-gray-200 rounded-2xl py-6 px-8 w-full max-w-md flex flex-col items-center">
                     <Link href={'/'}>
