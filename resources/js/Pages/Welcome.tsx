@@ -3,31 +3,44 @@ import {useForm} from "@inertiajs/react";
 import LoadingSpinner from "@/Components/LoadingSpinner";
 import InputError from "@/Components/InputError";
 import axios from "axios";
+import {FaRegCopy} from "react-icons/fa";
+import CopyToClipboard from "@/Utils/CopyToClipboard";
 
-export default function Welcome() {
+export default function Welcome({csrf_token}:any) {
     const [input, setInput] = useState('');
-    const [shortUrl] = useState('');
-    const [qrCode] = useState('');
+    const [shortUrl,setShortUrl] = useState('');
+    const [qrCode,setQrCode] = useState('');
 
     const {data, setData, post, processing, errors, reset} = useForm({
         url: '',
+        "_token": csrf_token,
+        "_method": "POST",
     });
 
 
-    // const submit = async () => {
-    //     let response:any = await axios.post('/generate-link',data);
-    //     let data3:any = await response.json();
-    //     console.log(data3);
-    // }
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
-        post('/generate-link', {
-            onSuccess: (data: any) => {
-                console.log(data);
-                reset();
+    const submit = async () => {
+        let response:any = await fetch('/generate-link',{
+            method:"post",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "X-CSRF-TOKEN": csrf_token
             },
+            body: JSON.stringify(data),
         });
-    };
+        let data3:any = await response.json();
+        setShortUrl(data3?.short_url);
+        setQrCode(data3?.qr_codes?.simple);
+    }
+    // const submit: FormEventHandler = (e) => {
+    //     e.preventDefault();
+    //     post('/generate-link', {
+    //         onSuccess: (data: any) => {
+    //             console.log(data);
+    //             reset();
+    //         },
+    //     });
+    // };
 
 
     return (
@@ -64,12 +77,17 @@ export default function Welcome() {
                     <div className={`w-full flex flex-col items-center gap-3 mt-2 ${shortUrl || qrCode ? ' ' : 'hidden'}`} >
                         <span className="text-gray-700 font-semibold w-full text-center">لینک کوتاه شما:</span>
                         <div className="bg-gray-100 rounded-lg px-4 py-2 text-blue-600 font-mono text-left break-all select-all cursor-pointer w-full" dir="ltr">
-                            {shortUrl}
+                            <div className="flex justify-between items-center">
+                                <a href={shortUrl} target="_blank">{shortUrl}</a>
+                                <button onClick={()=> CopyToClipboard(shortUrl)}><FaRegCopy /></button>
+                            </div>
                         </div>
                         <span className="text-gray-700 font-semibold mt-2 w-full text-center">QR Code:</span>
-                        <div className="bg-white p-3 rounded-lg shadow flex items-center justify-center">
-                            <div className="w-28 h-28 bg-gray-200 flex items-center justify-center text-gray-400 text-xs">
-                                {qrCode ? "" : "---"}
+                        <div className="p-3 rounded-lg flex items-center justify-center">
+                            <div className="w-full md:w-2/3 p-2 bg-white flex items-center justify-center text-gray-400 text-xs">
+                                <a download="short_link.svg" href={qrCode} target="_blank">
+                                    <img src={qrCode} className="w-full" alt=""/>
+                                </a>
                             </div>
                         </div>
                     </div>

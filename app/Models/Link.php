@@ -24,4 +24,10 @@ class Link extends Model
         }
         return $columns;
     }
+
+    protected $appends = ['short_url'];
+
+    public function getShortUrlAttribute(){
+        return 'https://lfly.ir/'.(!empty($this->code) ? $this->code : $this->id);
+    }
 }
