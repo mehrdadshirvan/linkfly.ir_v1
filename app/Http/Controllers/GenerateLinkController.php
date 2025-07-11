@@ -11,7 +11,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class GenerateLinkController extends Controller
 {
     public function __construct() {
-        $this->middleware("auth");
+        //$this->middleware("auth");
     }
 
     public function index() {}
@@ -24,7 +24,7 @@ class GenerateLinkController extends Controller
             ]
         );
         $url = $request->input('url');
-        $url = trim(strip_tags(htmlspecialchars($url, ENT_QUOTES)));
+//        $url = trim(strip_tags(htmlspecialchars($url, ENT_QUOTES)));
 
         $link = new Link();
         $link->uuid = uuid();

@@ -12,9 +12,9 @@ require __DIR__.'/auth.php';
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('welcome');
 Route::get('/{code}', [\App\Http\Controllers\HomeController::class, 'show']);
 
-Route::group(['middleware' => ['auth', 'verified']], function () {
+//Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/generate-link', [GenerateLinkController::class, 'store']);
-});
+//});
 
 
 
