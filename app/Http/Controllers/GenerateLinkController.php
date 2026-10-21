@@ -36,7 +36,12 @@ class GenerateLinkController extends Controller
         $link->save();
 
         $qrCodes = [];
-        $qrCodes['simple'] = 'data:image/svg+xml;base64,' . base64_encode(QrCode::format('svg')->size(1000)->generate($url));
+        $qrCodes['simple'] = 'data:image/svg+xml;base64,' . base64_encode(
+            QrCode::format('svg')
+                ->size(1000)
+                ->errorCorrection('M')
+                ->margin(0)
+                ->generate($url));
 //        $qrCodes['png'] = 'data:image/png;base64,' . base64_encode(
 //                QrCode::format('png')->size(1000)->generate($url)
 //            );
